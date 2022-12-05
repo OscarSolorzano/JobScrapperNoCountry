@@ -9,4 +9,4 @@ const jobsRouter = express.Router();
 
 jobsRouter.get('/', getAllJobs);
 
-module.exports = { usersRouter };
+module.exports = { jobsRouter };

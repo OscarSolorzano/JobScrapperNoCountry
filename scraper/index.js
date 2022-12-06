@@ -28,7 +28,7 @@ const { busquedaBumeran } = require('./scraperBumeran');
 const cronJobScrapper = async () => {
   console.log('Ejecutando...');
   console.log(new Date().toLocaleString());
-  await busquedaBumeran('backend', '');
+  // await busquedaBumeran('backend', '');
   await busquedaComputrabajo('desarrollador frontend', '');
   console.log('Finished');
   console.log(new Date().toLocaleString());

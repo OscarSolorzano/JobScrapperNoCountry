@@ -34,6 +34,7 @@ const busquedaBumeran = async (search, location = '') => {
       let type = 'Null';
       let links = 'Null';
       let description = 'Null';
+      let source = 'Bumeran';
 
       // pass the single handle below
 
@@ -115,7 +116,15 @@ const busquedaBumeran = async (search, location = '') => {
       if (name == 'Null') {
         continue;
       } else {
-        items.push({ name, company, location, type, links, description });
+        items.push({
+          name,
+          company,
+          location,
+          type,
+          links,
+          description,
+          source,
+        });
         listLinks.push(links);
       }
     }
@@ -143,7 +152,7 @@ const busquedaBumeran = async (search, location = '') => {
     // }
     stop++;
   }
-  console.log('done');
+  console.log('Done searching in Bumeran');
   // process.exit(13)//fix this
 };
 

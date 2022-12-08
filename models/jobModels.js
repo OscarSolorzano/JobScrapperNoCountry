@@ -23,6 +23,10 @@ const Job = db.define('job', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  source: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   link: {
     type: DataTypes.STRING,
     allowNull: false,

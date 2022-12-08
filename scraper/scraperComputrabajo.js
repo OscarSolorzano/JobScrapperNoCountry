@@ -92,18 +92,21 @@ const busquedaComputrabajo = async (search, location = '') => {
         '[div-link="oferta"] p.mbB'
       ).innerHTML;
 
+      const source = 'Computrabajo';
+
       return {
         name,
         company,
         location,
         contract,
         description: desc,
+        source,
       };
     });
 
     info.push(tempInfo);
   }
-  browser.close();
+  await browser.close();
 
   console.log('About to save jobs');
   //Guardar Trabajos a la base de datos
@@ -127,7 +130,7 @@ const busquedaComputrabajo = async (search, location = '') => {
   //     console.log(error.message)
   // }
 
-  console.log('done');
+  console.log('Done searching in Computrabajo');
 };
 
 module.exports = {

@@ -1,6 +1,7 @@
 const cron = require('cron');
 const { busquedaComputrabajo } = require('./scraperComputrabajo');
 const { busquedaBumeran } = require('./scraperBumeran');
+const { cleanDatabase } = require('../controllers/job.controller');
 
 // const cronJobScrapper = () => {
 //   new cron.CronJob(
@@ -26,11 +27,13 @@ const { busquedaBumeran } = require('./scraperBumeran');
 // };
 
 const cronJobScrapper = async () => {
+  console.log('Cleaning Database');
+  cleanDatabase();
   console.log('Ejecutando...');
   console.log(new Date().toLocaleString());
-  // await busquedaBumeran('backend', '');
-  await busquedaComputrabajo('desarrollador frontend', '');
-  console.log('Finished');
+  await busquedaBumeran('backend', '');
+  await busquedaComputrabajo('frontend', '');
+  console.log('Finished CronJob');
   console.log(new Date().toLocaleString());
 };
 

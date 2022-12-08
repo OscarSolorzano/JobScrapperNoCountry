@@ -21,28 +21,42 @@ const saveJobs = async (links, jobs) => {
       jobsWithLinks.push({ ...jobs[i], link: links[i] });
     }
     const jobPromises = jobsWithLinks.map(async (job) => {
-      const { name, company, location, description, link } = job;
-      const savedJob = await Job.findOne({
-        where: { name, company, description },
+      const { name, company, location, description, link, source } = job;
+      await Job.create({
+        name,
+        company,
+        location,
+        description,
+        link,
+        source,
       });
-      if (!savedJob) {
-        await Job.create({
-          name,
-          company,
-          location,
-          description,
-          link,
-        });
-      }
     });
     await Promise.all(jobPromises);
-    console.log('Done Saving Jobs');
   } catch (error) {
     console.log(error);
   }
 };
 
+const cleanDatabase = async () => {
+  oldJobs = await Job.findAll();
+  const promises = oldJobs.map(async (job) => {
+    await job.destroy();
+  });
+  await Promise.all(promises);
+};
+
+const getJobById = (req, res) => {
+  const { job } = req;
+
+  res.status(200).json({
+    status: 'success',
+    data: { job },
+  });
+};
+
 module.exports = {
   getAllJobs,
   saveJobs,
+  getJobById,
+  cleanDatabase,
 };

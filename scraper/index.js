@@ -31,8 +31,9 @@ const cronJobScrapper = async () => {
   cleanDatabase();
   console.log('Ejecutando...');
   console.log(new Date().toLocaleString());
-  await busquedaBumeran('backend', '');
   await busquedaComputrabajo('frontend', '');
+  await busquedaComputrabajo('backend', '');
+  await busquedaComputrabajo('fullstack', '');
   console.log('Finished CronJob');
   console.log(new Date().toLocaleString());
 };

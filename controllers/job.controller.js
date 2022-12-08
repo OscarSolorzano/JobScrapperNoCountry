@@ -5,7 +5,6 @@ const { Job } = require('../models/jobModels');
 const { catchAsync } = require('../utils/catchAsync.util');
 const { AppError } = require('../utils/appError.util');
 
-
 const getAllJobs = catchAsync(async (req, res, next) => {
   const jobs = await Job.findAll();
 
@@ -17,25 +16,27 @@ const getAllJobs = catchAsync(async (req, res, next) => {
 
 const saveJobs = async (links, jobs) => {
   try {
-      jobsWithLinks = []
-      for (let i = 0; i < links.length ; i++) {
-        jobsWithLinks.push({...jobs[i],link: links[i]})
+    jobsWithLinks = [];
+    for (let i = 0; i < links.length; i++) {
+      jobsWithLinks.push({ ...jobs[i], link: links[i] });
+    }
+    const jobPromises = jobsWithLinks.map(async (job) => {
+      const { name, company, location, description, link } = job;
+      const savedJob = await Job.findOne({
+        where: { name, company, description },
+      });
+      if (!savedJob) {
+        await Job.create({
+          name,
+          company,
+          location,
+          description,
+          link,
+        });
       }
-      const jobPromises = jobsWithLinks.map(async job =>{
-          const { name, company, location, description, link } = job;
-          const savedJob = await Job.findOne({where:{name, company, description} })
-          if(!savedJob){
-            await Job.create({
-              name,
-              company,
-              location,
-              description,
-              link,
-            });
-          }
-        }
-      )
-      await Promise.all(jobPromises)
+    });
+    await Promise.all(jobPromises);
+    console.log('Done Saving Jobs');
   } catch (error) {
     console.log(error);
   }

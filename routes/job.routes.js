@@ -1,7 +1,11 @@
 const express = require('express');
 
 // Controllers
-const { getAllJobs, getJobById } = require('../controllers/job.controller');
+const {
+  getAllJobs,
+  getJobById,
+  uploadJobs,
+} = require('../controllers/job.controller');
 
 // Middlewares
 
@@ -11,5 +15,6 @@ const jobsRouter = express.Router();
 
 jobsRouter.get('/', getAllJobs);
 jobsRouter.get('/:id', jobExists, getJobById);
+jobsRouter.post('/', uploadJobs);
 
 module.exports = { jobsRouter };

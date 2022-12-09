@@ -54,9 +54,31 @@ const getJobById = (req, res) => {
   });
 };
 
+const uploadJobs = catchAsync(async (req, res, next) => {
+  const { jobs } = req.body;
+
+  const jobPromises = jobs.map(async (job) => {
+    const { name, company, location, description, link, source } = job;
+    await Job.create({
+      name,
+      company,
+      location,
+      description,
+      link,
+      source,
+    });
+  });
+  await Promise.all(jobPromises);
+
+  res.status(200).json({
+    status: 'success',
+  });
+});
+
 module.exports = {
   getAllJobs,
   saveJobs,
   getJobById,
   cleanDatabase,
+  uploadJobs,
 };

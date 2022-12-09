@@ -8,7 +8,6 @@ const { cronJobScrapper } = require('./scraper');
 const { busqueda } = require('./scraper/scraperComputrabajo');
 const { db } = require('./utils/database.util');
 
-
 dotenv.config({ path: './config.env' });
 
 const startServer = async () => {
@@ -20,14 +19,14 @@ const startServer = async () => {
 
     await db.sync();
 
-    await db.sync({force: true})
+    await db.sync({ force: true });
 
     // Set server to listen
     const PORT = 4000;
 
     app.listen(PORT, () => {
       console.log('Express app running!');
-      cronJobScrapper()
+      // cronJobScrapper();
     });
   } catch (error) {
     console.log(error);
